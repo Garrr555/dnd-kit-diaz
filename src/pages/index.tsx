@@ -27,7 +27,7 @@ export default function Home() {
   // }, []);
 
   const fetchTasks = async () => {
-    const { data, error } = await supabase.from("Diaz").select("*");
+    const { data, error } = await supabase.from("tasks").select("*");
     if (!error && data) {
       setTasks(data as ITask[]);
     }
@@ -55,7 +55,7 @@ export default function Home() {
     );
 
     const { error } = await supabase
-      .from("Diaz")
+      .from("tasks")
       .update({ status: newStatus })
       .eq("id", taskId);
 
@@ -82,7 +82,7 @@ export default function Home() {
     // event.currentTarget.reset();
     // setShowModalAddTask(false);
 
-    const { error } = await supabase.from("Diaz").insert([newTask]);
+    const { error } = await supabase.from("tasks").insert([newTask]);
     if (!error) {
       fetchTasks();
       setShowModalAddTask(false);
@@ -108,7 +108,7 @@ export default function Home() {
     // setSelectedTask(null);
 
     const { error } = await supabase
-      .from("Diaz")
+      .from("tasks")
       .update(updatesTask)
       .eq("id", selectedTask?.task?.id);
     if (!error) {
@@ -124,7 +124,7 @@ export default function Home() {
     // setSelectedTask(null);
 
     const { error } = await supabase
-      .from("Diaz")
+      .from("tasks")
       .delete()
       .eq("id", selectedTask?.task?.id);
     if (!error) {
